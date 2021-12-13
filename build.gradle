@@ -61,7 +61,7 @@ publishing {
 
 
 
-version = '1.0.0'
+version = '1.0.2'
 
 group = 'nu.mine.mosher.io'
 
@@ -79,5 +79,7 @@ dependencies {
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of 11
+        withJavadocJar()
+        withSourcesJar()
     }
 }
