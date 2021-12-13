@@ -1,0 +1,83 @@
+plugins {
+    id "io.freefair.lombok" version "6.3.0"
+    id 'war'
+    id 'signing'
+    id 'maven-publish'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            pom {
+                name = 'adapt-slf4j-to-servlet'
+                description = 'Slf4j adaptation layer, that sends log messages to the servlet context.'
+                url = 'https://github.com/cmosher01/adapt-slf4j-to-servlet'
+                inceptionYear = '2021'
+                packaging = 'jar'
+                licenses {
+                    license {
+                        name = 'GNU General Public License v3.0'
+                        url = 'https://www.gnu.org/licenses/gpl-3.0.html'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'cmosher01'
+                        name = 'Christopher Alan Mosher'
+                        email = 'cmosher01@gmail.com'
+                        url = 'https://mosher.mine.nu'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/cmosher01/adapt-slf4j-to-servlet.git'
+                    developerConnection = 'scm:git:ssh://github.com/cmosher01/adapt-slf4j-to-servlet.git'
+                    url = 'https://github.com/cmosher01/adapt-slf4j-to-servlet'
+                }
+            }
+        }
+    }
+}
+tasks.assemble.dependsOn tasks.generatePomFileForMavenPublication
+
+signing {
+    sign publishing.publications.maven
+}
+if (hasProperty('signing.secretKeyRingFile')) {
+    tasks.assemble.dependsOn tasks.signMavenPublication
+}
+
+publishing {
+    repositories {
+        maven {
+            url "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            credentials {
+                username = findProperty('ossrhUsername') ?: 'restricted'
+                password = findProperty('ossrhPassword') ?: 'restricted'
+            }
+        }
+    }
+}
+
+
+
+version = '1.0.0'
+
+group = 'nu.mine.mosher.io'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: 'latest.integration'
+    providedCompile group: 'jakarta.servlet', name: 'jakarta.servlet-api', version: 'latest.release'
+}
+
+
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of 11
+    }
+}
