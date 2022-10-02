@@ -18,11 +18,16 @@ final class ServletLoggerFactory implements ILoggerFactory {
     }
 
     @NonNull
-    private static String clean(Object anyObjectOrNull) {
+    private static String clean(final Object anyObjectOrNull) {
         var name = "";
         if (Objects.nonNull(anyObjectOrNull)) {
             name = anyObjectOrNull.toString();
         }
+        return cleanNonNull(name);
+    }
+
+    @NonNull
+    private static String cleanNonNull(@NonNull String name) {
         name = name.trim();
         if (name.isBlank()) {
             name = ROOT_LOGGER_NAME;

@@ -25,12 +25,12 @@ public class ServletLoggerContext implements ServletContextListener {
     }
 
     @Override
-    public void contextInitialized(@NonNull final ServletContextEvent event) {
+    public void contextInitialized(final ServletContextEvent event) {
         set(Optional.ofNullable(event.getServletContext()));
     }
 
     @Override
-    public void contextDestroyed(@NonNull final ServletContextEvent event) {
+    public void contextDestroyed(final ServletContextEvent event) {
         set(Optional.empty());
     }
 }

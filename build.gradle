@@ -1,8 +1,7 @@
 plugins {
-    id "io.freefair.lombok" version "6.3.0"
-    id 'war'
-    id 'signing'
-    id 'maven-publish'
+    id "io.freefair.lombok" version "6.5.1"
+    id "war"
+    id "maven-publish"
 }
 
 publishing {
@@ -40,20 +39,13 @@ publishing {
 }
 tasks.assemble.dependsOn tasks.generatePomFileForMavenPublication
 
-signing {
-    sign publishing.publications.maven
-}
-if (hasProperty('signing.secretKeyRingFile')) {
-    tasks.assemble.dependsOn tasks.signMavenPublication
-}
-
 publishing {
     repositories {
         maven {
-            url "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            url 'https://maven.pkg.github.com/cmosher01/adapt-slf4j-to-servlet'
             credentials {
-                username = findProperty('ossrhUsername') ?: 'restricted'
-                password = findProperty('ossrhPassword') ?: 'restricted'
+                username = System.getenv('GITHUB_ACTOR') ?: 'restricted'
+                password = System.getenv('GITHUB_TOKEN') ?: 'restricted'
             }
         }
     }
@@ -61,7 +53,7 @@ publishing {
 
 
 
-version = '1.0.2'
+version = '1.0.3'
 
 group = 'nu.mine.mosher.io'
 
@@ -74,12 +66,8 @@ dependencies {
     providedCompile group: 'jakarta.servlet', name: 'jakarta.servlet-api', version: 'latest.release'
 }
 
-
-
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of 11
-        withJavadocJar()
-        withSourcesJar()
     }
 }

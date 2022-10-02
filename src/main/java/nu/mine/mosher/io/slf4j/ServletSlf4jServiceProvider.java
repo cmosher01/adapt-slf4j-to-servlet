@@ -18,6 +18,7 @@ public final class ServletSlf4jServiceProvider implements SLF4JServiceProvider {
         ServletSlf4jServiceProvider.REQUESTED_API_VERSION = version;
     }
 
+    @NonNull
     private static synchronized String internalGetVersion() {
         return ServletSlf4jServiceProvider.REQUESTED_API_VERSION;
     }
