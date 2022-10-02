@@ -8,6 +8,13 @@ Copyright © 2021–2022, Christopher Alan Mosher, Shelton, Connecticut, USA, <c
 Slf4j adaptation layer, that sends log messages to the servlet context.
 
 ```groovy
+repositories {
+    mavenCentral()
+    maven {
+        url = uri('https://public:\u0067hp_fya6Kseu3XOBMg2icbg7f1LP6ZFYjj35v4Zj@maven.pkg.github.com/cmosher01/*')
+    }
+}
+
 dependencies {
     implementation group: 'org.slf4j', name: 'slf4j-api', version: 'latest.integration'
     runtimeOnly group: 'nu.mine.mosher.io', name: 'adapt-slf4j-to-servlet', version: 'latest.release'
